@@ -45,4 +45,4 @@ galaxy_info:
     - ubuntu
 
 dependencies:
-  - ansible-role-reboot
+  - robertdebock.reboot
