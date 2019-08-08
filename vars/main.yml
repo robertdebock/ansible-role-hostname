@@ -1,0 +1,13 @@
+---
+# vars file for hostname
+_hostname_requirements:
+  default:
+    - hostname
+  Alpine:
+    - net-tools
+  Archlinux:
+    - net-tools
+  CentOS-6:
+    - net-tools
+
+hostname_requirements: "{{ _hostname_requirements[ansible_distribution ~ '-' ~ ansible_distribution_major_version] | default(_hostname_requirements[ansible_distribution] | default(_hostname_requirements['default'])) }}"

@@ -1,0 +1,5 @@
+---
+# defaults file for hostname
+
+# Should the machine be rebooted when the hostname is changed?
+hostname_reboot: yes
