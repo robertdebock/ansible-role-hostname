@@ -6,6 +6,9 @@ hostname
 
 Install dependencies and configure the hostname on your system.
 
+<img src="https://img.shields.io/ansible/role/d/42601"/>
+<img src="https://img.shields.io/ansible/quality/42601"/>
+
 Example Playbook
 ----------------
 
@@ -90,7 +93,7 @@ This role has been tested against the following distributions and Ansible versio
 |alpine-edge*|yes|yes|yes*|
 |alpine-latest|yes|yes|yes*|
 |archlinux|no|yes|yes*|
-|centos-6|yes|yes|yes*|
+|centos-7|yes|yes|yes*|
 |centos-latest|yes|yes|yes*|
 |debian-stable|yes|yes|yes*|
 |debian-unstable*|yes|yes|yes*|
