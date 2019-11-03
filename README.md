@@ -158,7 +158,6 @@ This role uses the following modules:
 - hostname
 - include_role
 - package
-- service
 ```
 
 License
