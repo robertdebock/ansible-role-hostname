@@ -46,6 +46,9 @@ These variables are set in `defaults/main.yml`:
 ---
 # defaults file for hostname
 
+# The hostname to set. By default whatever the inventory is set to.
+hostname: "{{ inventory_hostname }}"
+
 # Should the machine be rebooted when the hostname is changed?
 hostname_reboot: yes
 ```
