@@ -11,9 +11,6 @@ galaxy_info:
     - name: Amazon
       versions:
         - 2
-    - name: Alpine
-      versions:
-        - all
     - name: Debian
       versions:
         - all
