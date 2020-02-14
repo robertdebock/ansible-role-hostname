@@ -13,6 +13,7 @@
     name: "{{ hostname }}"
   when:
     - ansible_virtualization_type != "docker"
+    - ansible_virtualization_type != "container"
   register: set_hostname
 
 - name: reboot for hostname
