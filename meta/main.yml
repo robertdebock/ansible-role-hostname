@@ -10,7 +10,7 @@ galaxy_info:
   platforms:
     - name: Amazon
       versions:
-        - 2
+        - 2018.03
     - name: Debian
       versions:
         - all
