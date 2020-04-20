@@ -16,6 +16,7 @@ env:
   matrix:
     - image="amazonlinux" tag="1"
     - image="debian" tag="latest"
+    - image="debian" tag="bullseye"
     - image="centos" tag="7"
     - image="centos" tag="latest"
     - image="fedora" tag="30"
