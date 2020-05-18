@@ -40,4 +40,5 @@ galaxy_info:
     - redhat
 
 dependencies:
-  - robertdebock.reboot
+  - robertdebock.bootstrap
+
