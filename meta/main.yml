@@ -40,4 +40,4 @@ galaxy_info:
     - redhat
 
 dependencies:
-  - robertdebock.reboot
+  - { role: robertdebock.bootstrap, become: true }
