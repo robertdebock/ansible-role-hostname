@@ -42,4 +42,3 @@ galaxy_info:
 dependencies:
   - { role: robertdebock.bootstrap, become: true }
   - { role: robertdebock.core_dependencies, become: true }
-
