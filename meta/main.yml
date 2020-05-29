@@ -40,4 +40,4 @@ galaxy_info:
     - redhat
 
 dependencies:
-  - { role: robertdebock.bootstrap, become: true }
+  - {'role': 'robertdebock.bootstrap', 'become': True}
