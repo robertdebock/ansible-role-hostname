@@ -2,9 +2,9 @@
 
 Install dependencies and configure the hostname on your system.
 
-|Travis|GitHub|Quality|Downloads|
-|------|------|-------|---------|
-|[![travis](https://travis-ci.com/robertdebock/ansible-role-hostname.svg?branch=master)](https://travis-ci.com/robertdebock/ansible-role-hostname)|[![github](https://github.com/robertdebock/ansible-role-hostname/workflows/Ansible%20Molecule/badge.svg)](https://github.com/robertdebock/ansible-role-hostname/actions)|[![quality](https://img.shields.io/ansible/quality/42601)](https://galaxy.ansible.com/robertdebock/hostname)|[![downloads](https://img.shields.io/ansible/role/d/42601)](https://galaxy.ansible.com/robertdebock/hostname)|
+|Travis|GitHub|Quality|Downloads|Version|
+|------|------|-------|---------|-------|
+|[![travis](https://travis-ci.com/robertdebock/ansible-role-hostname.svg?branch=master)](https://travis-ci.com/robertdebock/ansible-role-hostname)|[![github](https://github.com/robertdebock/ansible-role-hostname/workflows/Ansible%20Molecule/badge.svg)](https://github.com/robertdebock/ansible-role-hostname/actions)|[![quality](https://img.shields.io/ansible/quality/42601)](https://galaxy.ansible.com/robertdebock/hostname)|[![downloads](https://img.shields.io/ansible/role/d/42601)](https://galaxy.ansible.com/robertdebock/hostname)|[![Version](https://img.shields.io/github/release/robertdebock/ansible-role-hostname.svg)](https://github.com/robertdebock/ansible-role-hostname/releases/)|
 
 ## [Example Playbook](#example-playbook)
 
