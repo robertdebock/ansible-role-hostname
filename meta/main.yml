@@ -39,5 +39,4 @@ galaxy_info:
     - centos
     - redhat
 
-dependencies:
-  - robertdebock.reboot
+dependencies: []
