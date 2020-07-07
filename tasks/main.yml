@@ -14,15 +14,7 @@
 - name: set hostname
   hostname:
     name: "{{ hostname }}"
+  notify:
+    - reboot
   when:
     - ansible_connection != "docker"
-  register: hostname_set_hostname
-
-- name: reboot for hostname
-  include_role:
-    name: robertdebock.reboot
-  when:
-    - hostname_set_hostname.changed
-    - hostname_reboot | bool
-  tags:
-    - skip_ansible_lint
