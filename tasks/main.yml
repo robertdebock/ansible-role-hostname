@@ -7,9 +7,6 @@
   package:
     name: "{{ hostname_requirements }}"
     state: present
-  register: hostname_install_requirements
-  until: hostname_install_requirements is succeeded
-  retries: 3
 
 - name: set hostname
   hostname:
