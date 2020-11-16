@@ -10,5 +10,5 @@
   assert:
     that:
       - hostname_reboot is defined
-      - hostname_reboot | type_debug == "bool"
+      - hostname_reboot is boolean
     quiet: yes
