@@ -3,7 +3,6 @@
   assert:
     that:
       - hostname is defined
-      - hostname | length > 0
     quiet: yes
 
 - name: test if hostname_reboot is set correctly
