@@ -1,5 +1,6 @@
 ---
 # handlers file for hostname
+
 - name: reboot
   reboot:
   when:
