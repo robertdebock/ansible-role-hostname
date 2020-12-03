@@ -5,3 +5,6 @@
   reboot:
   when:
     - hostname_reboot | bool
+
+- name: gather facts
+  setup:

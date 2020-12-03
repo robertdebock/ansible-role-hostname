@@ -15,8 +15,6 @@
     name: "{{ hostname }}"
   notify:
     - reboot
+    - gather facts
   when:
     - ansible_connection != "docker"
-
-- name: gather ansible facts
-  setup: {}
