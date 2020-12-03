@@ -42,7 +42,7 @@ These variables are set in `defaults/main.yml`:
 # defaults file for hostname
 
 # The hostname to set. By default whatever the inventory is set to.
-hostname: "{{ inventory_hostname }}"
+hostname: "{{ inventory_hostname_short }}"
 
 # Should the machine be rebooted when the hostname is changed?
 hostname_reboot: yes
@@ -138,6 +138,7 @@ Apache-2.0
 I'd like to thank everybody that made contributions to this repository. It motivates me, improves the code and is just fun to collaborate.
 
 - [Tcharl](https://github.com/Tcharl)
+- [hollow](https://github.com/hollow)
 
 ## [Author Information](#author-information)
 
