@@ -1,5 +1,6 @@
 ---
 # vars file for hostname
+
 _hostname_requirements:
   default:
     - hostname
