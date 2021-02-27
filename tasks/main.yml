@@ -10,7 +10,7 @@
     name: "{{ hostname_requirements }}"
     state: present
 
-- name: set hostname
+- name: set hostname to "{{ hostname }}"
   hostname:
     name: "{{ hostname }}"
   notify:
