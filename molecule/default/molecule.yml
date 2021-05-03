@@ -6,20 +6,23 @@ dependency:
   name: galaxy
   options:
     role-file: requirements.yml
-lint: |
-  set -e
-  yamllint .
-  ansible-lint
+lint: yamllint . && flake8 && ansible-lint
 driver:
   name: docker
 platforms:
   - name: "hostname-${image:-fedora}-${tag:-latest}${TOX_ENVNAME}"
-    image: "${namespace:-robertdebock}/${image:-fedora}:${tag:-latest}"
-    command: /sbin/init
+    image: "fedora:33"
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
     privileged: yes
     pre_build_image: yes
+    docker_networks:
+      - name: 'acmenet'
+        ipam_config:
+          - subnet: '10.30.50.0/24'
+    networks:
+      - name: "acmenet"
+        ipv4_address: '10.30.50.2'
 provisioner:
   name: ansible
   config_options:

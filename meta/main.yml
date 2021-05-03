@@ -1,11 +1,12 @@
 ---
 galaxy_info:
-  author: Robert de Bock
-  role_name: hostname
+  author: Charlie Mordant on top of Robert de Bock's work
+  namespace: tcharl
+  role_name: ansible_hostname
   description: Install dependencies and configure the hostname on your system.
   license: Apache-2.0
   company: none
-  min_ansible_version: 2.9
+  min_ansible_version: "2.10"
 
   platforms:
     - name: Alpine

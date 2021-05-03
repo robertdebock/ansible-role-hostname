@@ -2,9 +2,9 @@
 # handlers file for hostname
 
 - name: reboot
-  reboot:
+  ansible.builtin.reboot:
   when:
     - hostname_reboot | bool
 
 - name: gather facts
-  setup:
+  ansible.builtin.setup:

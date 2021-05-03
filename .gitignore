@@ -2,3 +2,5 @@
 *.log
 *.swp
 .tox
+.cache
+.DS_Store

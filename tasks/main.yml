@@ -1,20 +1,61 @@
 ---
 # tasks file for hostname
 
-- name: include assert.yml
-  include_tasks: assert.yml
+- name: import assert.yml
+  import_tasks: assert.yml
   run_once: yes
+  delegate_to: localhost
 
 - name: install requirements
-  package:
+  ansible.builtin.package:
     name: "{{ hostname_requirements }}"
     state: present
 
-- name: set hostname to "{{ hostname }}"
-  hostname:
+- name: set hostname
+  ansible.builtin.hostname:
     name: "{{ hostname }}"
   notify:
     - reboot
     - gather facts
   when:
     - ansible_connection != "docker"
+
+- name: add host in hosts file
+  lineinfile:
+    path: /etc/hosts
+    regexp: '^{{ hostsfact }} {{ ns_hostname }}'
+    insertbefore: BOF
+    line: '{{ hostsfact }} {{ ns_hostname }}'
+    owner: root
+    group: root
+    mode: '0644'
+  become: true
+  loop: "{{ ansible_facts.ansible_all_ipv4_addresses | default([]) }}"
+  loop_control:
+    loop_var: hostsfact
+  when: >
+    ansible_facts.ansible_all_ipv4_addresses and
+    ansible_connection != "docker" and
+    (hostnamedeclared is failed or
+    hostnamedeclared.rc == 1 or
+    hostnamedeclared.stdout == 0)
+
+- name: ansible-nameserver | host | add IP6 host in hosts file
+  lineinfile:
+    path: /etc/hosts
+    regexp: '^{{ hostsfact }} {{ ns_hostname }}'
+    insertbefore: BOF
+    line: '{{ hostsfact }} {{ ns_hostname }}'
+    owner: root
+    group: root
+    mode: '0644'
+  become: true
+  loop: "{{ ansible_facts.ansible_all_ipv6_addresses | default([]) }}"
+  loop_control:
+    loop_var: hostsfact
+  when: >
+    ansible_facts.ansible_all_ipv4_addresses and
+    ansible_connection != "docker" and
+    (hostnamedeclared is failed or
+    hostnamedeclared.rc == 1 or
+    hostnamedeclared.stdout == 0)
