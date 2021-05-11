@@ -16,9 +16,10 @@
 - name: ansible-nameserver | host | add host in hosts file
   ansible.builtin.lineinfile:
     path: /etc/hosts
-    regexp: '^{{ ip }}'
+    regexp: '^{{ ip }}(.*)$'
+    backrefs: yes
     insertbefore: BOF
-    line: '{{ ip }} {{ host }}'
+    line: '{{ ip }} {{ host }}\1'
     owner: root
     group: root
     mode: '0644'
