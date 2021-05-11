@@ -23,6 +23,7 @@
     group: root
     mode: '0644'
   become: true
+  changed_when: false # IPV6 have tendency to add some new entries every time
   when: >
     host_entries is failed or
     host_entries.stdout == 0
