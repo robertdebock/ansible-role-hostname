@@ -1,0 +1,28 @@
+---
+
+- name: ansible-nameserver | host | check host is in hostfile
+  shell: >
+    set -o pipefail &&
+    cat /etc/hosts | egrep -c '{{ ip.replace('\.', '\\.') }}[^_]*{{ hostname.replace('\.', '\\.') }}'
+  register: host_entries
+  ignore_errors: true
+  changed_when: false
+
+- name: ansible-nameserver | host |debug hostfile var
+  debug:
+    var: host_entries
+    verbosity: 3
+
+- name: ansible-nameserver | host | add host in hosts file
+  ansible.builtin.lineinfile:
+    path: /etc/hosts
+    regexp: '^{{ ip }}'
+    insertbefore: BOF
+    line: '{{ ip }} {{ hostname }}'
+    owner: root
+    group: root
+    mode: '0644'
+  become: true
+  when: >
+    host_entries is failed or
+    host_entries.stdout == 0

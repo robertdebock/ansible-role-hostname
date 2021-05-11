@@ -20,42 +20,25 @@
   when:
     - ansible_connection != "docker"
 
-- name: add host in hosts file
-  lineinfile:
-    path: /etc/hosts
-    regexp: '^{{ hostsfact }} {{ ns_hostname }}'
-    insertbefore: BOF
-    line: '{{ hostsfact }} {{ ns_hostname }}'
-    owner: root
-    group: root
-    mode: '0644'
-  become: true
-  loop: "{{ ansible_facts.ansible_all_ipv4_addresses | default([]) }}"
-  loop_control:
-    loop_var: hostsfact
-  when: >
-    ansible_facts.ansible_all_ipv4_addresses and
-    ansible_connection != "docker" and
-    (hostnamedeclared is failed or
-    hostnamedeclared.rc == 1 or
-    hostnamedeclared.stdout == 0)
+- name: ansible-role-hostname | gather facts on newly created machines
+  setup:
+  register: hostsfacts
 
-- name: ansible-nameserver | host | add IP6 host in hosts file
-  lineinfile:
-    path: /etc/hosts
-    regexp: '^{{ hostsfact }} {{ ns_hostname }}'
-    insertbefore: BOF
-    line: '{{ hostsfact }} {{ ns_hostname }}'
-    owner: root
-    group: root
-    mode: '0644'
-  become: true
-  loop: "{{ ansible_facts.ansible_all_ipv6_addresses | default([]) }}"
+- name: ansible-role-hostname | host file configuration for ipv4
+  include_tasks: host.yml
+  vars:
+    hostname: "{{ ns_hostname }}"
+  loop: "{{ hostsfacts.ansible_facts.ansible_all_ipv4_addresses  | default([]) }}"
   loop_control:
-    loop_var: hostsfact
-  when: >
-    ansible_facts.ansible_all_ipv4_addresses and
-    ansible_connection != "docker" and
-    (hostnamedeclared is failed or
-    hostnamedeclared.rc == 1 or
-    hostnamedeclared.stdout == 0)
+    loop_var: ip
+  when: ansible_connection != "docker"
+
+- name: ansible-role-hostname | host file configuration for ipv6
+  include_tasks: host.yml
+  vars:
+    hostname: "{{ ns_hostname }}"
+  loop: "{{ hostsfacts.ansible_facts.ansible_all_ipv6_addresses | default([]) }}"
+  loop_control:
+    loop_var: ip
+  when: ansible_connection != "docker"
+
