@@ -21,9 +21,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           path: "${{ github.repository }}"
-      - name: pip install packages
-        run: |
-          sudo pip3 install flake8
       - name: molecule
         uses: robertdebock/molecule-action@2.6.16
         with:
