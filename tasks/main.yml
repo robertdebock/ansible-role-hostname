@@ -41,4 +41,3 @@
   loop_control:
     loop_var: ip
   when: ansible_connection != "docker"
-
