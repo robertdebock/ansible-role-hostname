@@ -3,7 +3,7 @@
 - name: ansible-nameserver | host | check host is in hostfile
   shell: >
     set -o pipefail &&
-    cat /etc/hosts | egrep -c '{{ ip.replace('\.', '\\.') }}[^_]*{{ hostname.replace('\.', '\\.') }}'
+    cat /etc/hosts | egrep -c '{{ ip.replace('\.', '\\.') }}[^_]*{{ host.replace('\.', '\\.') }}'
   register: host_entries
   ignore_errors: true
   changed_when: false
@@ -18,7 +18,7 @@
     path: /etc/hosts
     regexp: '^{{ ip }}'
     insertbefore: BOF
-    line: '{{ ip }} {{ hostname }}'
+    line: '{{ ip }} {{ host }}'
     owner: root
     group: root
     mode: '0644'

@@ -27,7 +27,7 @@
 - name: ansible-role-hostname | host file configuration for ipv4
   include_tasks: host.yml
   vars:
-    hostname: "{{ ns_hostname }}"
+    host: "{{ hostname }}"
   loop: "{{ hostsfacts.ansible_facts.ansible_all_ipv4_addresses  | default([]) }}"
   loop_control:
     loop_var: ip
@@ -36,7 +36,7 @@
 - name: ansible-role-hostname | host file configuration for ipv6
   include_tasks: host.yml
   vars:
-    hostname: "{{ ns_hostname }}"
+    host: "{{ hostname }}"
   loop: "{{ hostsfacts.ansible_facts.ansible_all_ipv6_addresses | default([]) }}"
   loop_control:
     loop_var: ip
