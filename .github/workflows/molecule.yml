@@ -23,7 +23,7 @@ jobs:
           path: "${{ github.repository }}"
       - name: pip install packages
         run: |
-          pip3 install flake8
+          sudo pip3 install flake8
       - name: molecule
         uses: robertdebock/molecule-action@2.6.16
         with:
