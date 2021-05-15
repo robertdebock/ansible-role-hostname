@@ -1,24 +1,19 @@
 ---
 
-- name: ansible-nameserver | host | check host is in hostfile
+- name: ansible-role-hostname | host | check host is in hostfile
   shell: >
     set -o pipefail &&
-    cat /etc/hosts | egrep -c '{{ ip.replace('\.', '\\.') }}[^_]*{{ host.replace('\.', '\\.') }}'
-  register: host_entries
+    cat /etc/hosts | egrep -c '{{ ip.replace('\.', '\\.') }}'
+  register: hosts_ip_entry_exists
   ignore_errors: true
+  failed_when: false
   changed_when: false
 
-- name: ansible-nameserver | host |debug hostfile var
-  debug:
-    var: host_entries
-    verbosity: 3
-
-- name: ansible-nameserver | host | add host in hosts file
+- name: ansible-role-hostname | host | add host in hosts file if ip entry exists
   ansible.builtin.lineinfile:
     path: /etc/hosts
     regexp: '^{{ ip }}(.*)$'
     backrefs: yes
-    insertbefore: BOF
     line: '{{ ip }} {{ host }}\1'
     owner: root
     group: root
@@ -26,6 +21,22 @@
   become: true
   changed_when: false
   # IPV6 have tendency to add some new entries every time
-  when: >
-    host_entries is failed or
-    host_entries.stdout == 0
+  when:
+    - hosts_ip_entry_exists.rc == 0
+    - hosts_ip_entry_exists.stdout != 0
+
+- name: ansible-role-hostname | host | add host in hosts file if ip_entry does not exist
+  ansible.builtin.lineinfile:
+    path: /etc/hosts
+    insertbefore: BOF
+    line: '{{ ip }} {{ host }}'
+    owner: root
+    group: root
+    mode: '0644'
+  become: true
+  changed_when: false
+  # IPV6 have tendency to add some new entries every time
+  when:
+    hosts_ip_entry_exists is failed or
+    hosts_ip_entry_exists.rc == 1 or
+    hosts_ip_entry_exists.stdout == 0
