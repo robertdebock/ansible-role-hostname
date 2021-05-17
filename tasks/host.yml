@@ -9,6 +9,15 @@
   failed_when: false
   changed_when: false
 
+- name: ansible-role-hostname | host | check ip and hostname is in hostfile
+  shell: >
+    set -o pipefail &&
+    cat /etc/hosts | egrep -c '{{ ip.replace('\.', '\\.') }}.*{{ host.replace('\.', '\\.') }}'
+  register: hosts_entry_exists
+  ignore_errors: true
+  failed_when: false
+  changed_when: false
+
 - name: ansible-role-hostname | host | add host in hosts file if ip entry exists
   ansible.builtin.lineinfile:
     path: /etc/hosts
@@ -24,6 +33,7 @@
   when:
     - hosts_ip_entry_exists.rc == 0
     - hosts_ip_entry_exists.stdout != 0
+    - hosts_entry_exists.rc == 1 or hosts_entry_exists.stdout == 0
 
 - name: ansible-role-hostname | host | add host in hosts file if ip_entry does not exist
   ansible.builtin.lineinfile:
@@ -37,6 +47,8 @@
   changed_when: false
   # IPV6 have tendency to add some new entries every time
   when:
-    hosts_ip_entry_exists is failed or
+    (hosts_ip_entry_exists is failed or
     hosts_ip_entry_exists.rc == 1 or
-    hosts_ip_entry_exists.stdout == 0
+    hosts_ip_entry_exists.stdout == 0) and
+    (hosts_entry_exists.rc == 1 or
+    hosts_entry_exists.stdout == 0)
