@@ -47,8 +47,6 @@
   changed_when: false
   # IPV6 have tendency to add some new entries every time
   when:
-    (hosts_ip_entry_exists is failed or
+    hosts_ip_entry_exists is failed or
     hosts_ip_entry_exists.rc == 1 or
-    hosts_ip_entry_exists.stdout == 0) and
-    (hosts_entry_exists.rc == 1 or
-    hosts_entry_exists.stdout == 0)
+    hosts_ip_entry_exists.stdout == 0
