@@ -6,3 +6,5 @@ hostname: "{{ inventory_hostname_short }}"
 
 # Should the machine be rebooted when the hostname is changed?
 hostname_reboot: yes
+handle_ipv4: yes
+handle_ipv6: False

@@ -31,7 +31,9 @@
   loop: "{{ hostsfacts.ansible_facts.ansible_all_ipv4_addresses  | default([]) }}"
   loop_control:
     loop_var: ip
-  when: ansible_connection != "docker"
+  when:
+   - ansible_connection != "docker"
+   - handle_ipv4
 
 - name: ansible-role-hostname | host file configuration for ipv6
   include_tasks: host.yml
@@ -40,4 +42,6 @@
   loop: "{{ hostsfacts.ansible_facts.ansible_all_ipv6_addresses | default([]) }}"
   loop_control:
     loop_var: ip
-  when: ansible_connection != "docker"
+  when:
+   - ansible_connection != "docker"
+   - handle_ipv6
