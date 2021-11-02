@@ -30,7 +30,7 @@ In you own GitHub namespace, make the required changes.
 I typically do that by cloning the repository (in your namespace) locally:
 
 ```
-git clone git@github.com:YOURNAMESPACE/ansible-role-hostname.git
+git clone git@github.com:YOURNAMESPACE/ansible-role-hostname.git tcharl.ansible_hostname
 ```
 
 Now you can start to edit on your laptop.
