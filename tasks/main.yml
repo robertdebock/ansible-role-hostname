@@ -18,7 +18,7 @@
     - reboot
     - gather facts
   when:
-    - ansible_connection != "docker"
+    - ansible_connection != "community.docker.docker"
 
 - name: ansible-role-hostname | gather facts on newly created machines
   setup:
@@ -32,8 +32,8 @@
   loop_control:
     loop_var: ip
   when:
-   - ansible_connection != "docker"
-   - handle_ipv4
+    - ansible_connection != "community.docker.docker"
+    - handle_ipv4
 
 - name: ansible-role-hostname | host file configuration for ipv6
   include_tasks: host.yml
@@ -43,5 +43,5 @@
   loop_control:
     loop_var: ip
   when:
-   - ansible_connection != "docker"
-   - handle_ipv6
+    - ansible_connection != "community.docker.docker"
+    - handle_ipv6
