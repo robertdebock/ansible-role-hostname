@@ -28,7 +28,8 @@
   include_tasks: host.yml
   vars:
     host: "{{ hostname }}"
-  loop: "{{ hostsfacts.ansible_facts.ansible_all_ipv4_addresses | default([]) | reject('match', '^.*\\.1$') }}" # exclude addresses that endswith 1 because they usually
+  loop: "{{ hostsfacts.ansible_facts.ansible_all_ipv4_addresses | default([]) | reject('match', '^.*\\.1$') }}"
+  # exclude addresses that endswith 1 because they usually
   loop_control:
     loop_var: ip
   when:
