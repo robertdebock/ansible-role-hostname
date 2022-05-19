@@ -1,7 +1,7 @@
 ---
 
 - name: ansible-role-hostname | host | check host is in hostfile
-  shell: >
+  ansible.builtin.shell: >
     set -o pipefail &&
     cat /etc/hosts | egrep -c '{{ ip.replace('\.', '\\.') }}'
   register: hosts_ip_entry_exists
@@ -10,7 +10,7 @@
   changed_when: false
 
 - name: ansible-role-hostname | host | check ip and hostname is in hostfile
-  shell: >
+  ansible.builtin.shell: >
     set -o pipefail &&
     cat /etc/hosts | egrep -c '{{ ip.replace('\.', '\\.') }}.*{{ host.replace('\.', '\\.') }}'
   register: hosts_entry_exists

@@ -2,7 +2,7 @@
 # tasks file for hostname
 
 - name: import assert.yml
-  import_tasks: assert.yml
+  ansible.builtin.import_tasks: assert.yml
   run_once: yes
   delegate_to: localhost
 
@@ -21,11 +21,11 @@
     - ansible_connection != "community.docker.docker"
 
 - name: ansible-role-hostname | gather facts on newly created machines
-  setup:
+  ansible.builtin.setup:
   register: hostsfacts
 
 - name: ansible-role-hostname | host file configuration for ipv4
-  include_tasks: host.yml
+  ansible.builtin.include_tasks: host.yml
   vars:
     host: "{{ hostname }}"
   loop: "{{ hostsfacts.ansible_facts.ansible_all_ipv4_addresses | default([]) | reject('match', '^.*\\.1$') }}"
@@ -37,7 +37,7 @@
     - handle_ipv4
 
 - name: ansible-role-hostname | host file configuration for ipv6
-  include_tasks: host.yml
+  ansible.builtin.include_tasks: host.yml
   vars:
     host: "{{ hostname }}"
   loop: "{{ hostsfacts.ansible_facts.ansible_all_ipv6_addresses | default([]) }}"
