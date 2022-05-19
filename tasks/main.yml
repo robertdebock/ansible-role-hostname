@@ -18,7 +18,7 @@
     - reboot
     - gather facts
   when:
-    - ansible_connection != "community.docker.docker"
+    - ansible_connection not in [ "container", "docker", "community.docker.docker" ]
 
 - name: ansible-role-hostname | gather facts on newly created machines
   ansible.builtin.setup:
@@ -33,7 +33,7 @@
   loop_control:
     loop_var: ip
   when:
-    - ansible_connection != "community.docker.docker"
+    - ansible_connection not in [ "container", "docker", "community.docker.docker" ]
     - handle_ipv4
 
 - name: ansible-role-hostname | host file configuration for ipv6
@@ -44,5 +44,5 @@
   loop_control:
     loop_var: ip
   when:
-    - ansible_connection != "community.docker.docker"
+    - ansible_connection not in [ "container", "docker", "community.docker.docker" ]
     - handle_ipv6
