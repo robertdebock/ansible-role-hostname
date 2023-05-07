@@ -1,17 +1,17 @@
 ---
 # tasks file for hostname
 
-- name: import assert.yml
+- name: Import assert.yml
   ansible.builtin.import_tasks: assert.yml
   run_once: yes
   delegate_to: localhost
 
-- name: install requirements
+- name: Install requirements
   ansible.builtin.package:
     name: "{{ hostname_requirements }}"
     state: present
 
-- name: set hostname
+- name: Set hostname
   ansible.builtin.hostname:
     name: "{{ hostname }}"
   notify:
@@ -20,11 +20,11 @@
   when:
     - ansible_connection not in [ "container", "docker", "community.docker.docker" ]
 
-- name: ansible-role-hostname | gather facts on newly created machines
+- name: Gather facts on newly created machines
   ansible.builtin.setup:
   register: hostsfacts
 
-- name: ansible-role-hostname | host file configuration for ipv4
+- name: Host file configuration for ipv4
   ansible.builtin.include_tasks: host.yml
   vars:
     host: "{{ hostname }}"
@@ -33,10 +33,10 @@
   loop_control:
     loop_var: ip
   when:
-    - ansible_connection not in [ "container", "docker", "community.docker.docker" ]
     - handle_ipv4
+    - ansible_facts['virtualization_type'] is not defined and ansible_facts['virtualization_type'] not in ['container']
 
-- name: ansible-role-hostname | host file configuration for ipv6
+- name: Host file configuration for ipv6
   ansible.builtin.include_tasks: host.yml
   vars:
     host: "{{ hostname }}"
@@ -44,5 +44,5 @@
   loop_control:
     loop_var: ip
   when:
-    - ansible_connection not in [ "container", "docker", "community.docker.docker" ]
     - handle_ipv6
+    - ansible_facts['virtualization_type'] is not defined and ansible_facts['virtualization_type'] not in ['container']

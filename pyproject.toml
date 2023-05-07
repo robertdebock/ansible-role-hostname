@@ -1,0 +1,28 @@
+[tool.poetry]
+name = "tcharl.ansible_hostname"
+version = "0.1.0"
+description = "etc_host file management"
+authors = ["Charlie Mordant <cmordant1@gmail.com>"]
+license = "Apache2"
+readme = "README.md"
+include = ["defaults", "files", "handlers", "meta", "tasks", "templates", "vars"]
+packages = [
+    {include = "meta/**/*.py"}
+]
+
+[tool.poetry.dependencies]
+python = ">3.10"
+ansible = "^7.5.0"
+
+[tool.poetry.group.dev.dependencies]
+ansible-compat = "*"
+flake8 = "*"
+yamllint = "*"
+pytest-testinfra = "*"
+molecule-plugins = {version = "*", extras = ["docker"]}
+ansible-lint = "*"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
