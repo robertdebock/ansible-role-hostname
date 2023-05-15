@@ -18,31 +18,44 @@
     - reboot
     - gather facts
   when:
-    - ansible_connection not in [ "container", "docker", "community.docker.docker" ]
+    - ansible_facts['virtualization_type'] is not defined or ansible_facts['virtualization_type'] not in ['container']
 
 - name: Gather facts on newly created machines
   ansible.builtin.setup:
   register: hostsfacts
 
+- name: Compute ip4 if preferred_nic is not set
+  ansible.builtin.debug:
+    msg: "{{ [ hostsfacts.ansible_facts['ansible_' + preferred_nic].ipv4.address ] if preferred_nic is defined else ([ hostsfacts.ansible_facts.ansible_default_ipv4.address ] if hostsfacts.ansible_facts.ansible_default_ipv4.address is defined else hostsfacts.ansible_facts.ansible_all_ipv4_addresses | default([])) | reject('match', '^.*\\.1$') }}"
+  when:
+    - handle_ipv4
+    - ansible_facts['virtualization_type'] is not defined or ansible_facts['virtualization_type'] not in ['container']
+  register: current_host_ip4s
+
 - name: Host file configuration for ipv4
   ansible.builtin.include_tasks: host.yml
   vars:
     host: "{{ hostname }}"
-  loop: "{{ hostsfacts.ansible_facts.ansible_all_ipv4_addresses | default([]) | reject('match', '^.*\\.1$') }}"
+  loop: "{{ current_host_ip4s | list }}"
   # exclude addresses that endswith 1 because they usually
   loop_control:
     loop_var: ip
   when:
     - handle_ipv4
-    - ansible_facts['virtualization_type'] is not defined and ansible_facts['virtualization_type'] not in ['container']
+    - ansible_facts['virtualization_type'] is not defined or ansible_facts['virtualization_type'] not in ['container']
+
+- name: Compute ip6 if preferred_nic is not set
+  ansible.builtin.debug:
+    msg: "{{ [ hostsfacts.ansible_facts['ansible_' + preferred_nic].ipv6.address ] if preferred_nic is defined and hostsfacts.ansible_facts['ansible_' + preferred_nic].ipv6 is defined and hostsfacts.ansible_facts['ansible_' + preferred_nic].ipv6.address is defined else ([ hostsfacts.ansible_facts.ansible_default_ipv6.address ] if hostsfacts.ansible_facts.ansible_default_ipv6.address is defined else hostsfacts.ansible_facts.ansible_all_ipv6_addresses | default([])) }}"
+  register: current_host_ip6s
 
 - name: Host file configuration for ipv6
   ansible.builtin.include_tasks: host.yml
   vars:
     host: "{{ hostname }}"
-  loop: "{{ hostsfacts.ansible_facts.ansible_all_ipv6_addresses | default([]) }}"
+  loop: "{{ current_host_ip6s | list }}"
   loop_control:
     loop_var: ip
   when:
     - handle_ipv6
-    - ansible_facts['virtualization_type'] is not defined and ansible_facts['virtualization_type'] not in ['container']
+    - ansible_facts['virtualization_type'] is not defined or ansible_facts['virtualization_type'] not in ['container']
