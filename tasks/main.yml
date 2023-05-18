@@ -19,6 +19,7 @@
     - gather facts
   when:
     - ansible_facts['virtualization_type'] is not defined or ansible_facts['virtualization_type'] not in ['container']
+    - hostname is defined
 
 - name: Gather facts on newly created machines
   ansible.builtin.setup:
@@ -36,7 +37,7 @@
   ansible.builtin.include_tasks: host.yml
   vars:
     host: "{{ hostname }}"
-  loop: "{{ current_host_ip4s | list }}"
+  loop: "{{ current_host_ip4s.msg | list }}"
   # exclude addresses that endswith 1 because they usually
   loop_control:
     loop_var: ip
@@ -53,7 +54,7 @@
   ansible.builtin.include_tasks: host.yml
   vars:
     host: "{{ hostname }}"
-  loop: "{{ current_host_ip6s | list }}"
+  loop: "{{ current_host_ip6s.msg | list }}"
   loop_control:
     loop_var: ip
   when:
