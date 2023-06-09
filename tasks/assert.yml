@@ -5,6 +5,7 @@
     that:
       - hostname is defined
       - hostname is string
+      - hostname is not none
     quiet: yes
 
 - name: assert | Test if hostname_reboot is set correctly
