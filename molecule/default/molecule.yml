@@ -11,8 +11,7 @@ driver:
   name: docker
 platforms:
   - name: "hostname-${image:-fedora}-${tag:-latest}${TOX_ENVNAME}"
-    image: "fedora:38"
-    command: /sbin/init
+    image: fedora:38
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
     privileged: yes
