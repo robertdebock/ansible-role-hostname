@@ -1,4 +1,4 @@
-# Ansible role [hostname](#hostname)
+# [Ansible role hostname](#hostname)
 
 Install dependencies and configure the hostname on your system.
 
