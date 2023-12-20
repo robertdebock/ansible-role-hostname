@@ -1,7 +1,7 @@
 ---
 namespace: "tcharl"
 name: "ansible_hostname"
-version: "0.0.1"
+version: "1.0.1"
 description: "Configures etc/host file on systems"
 
 authors:
@@ -18,3 +18,4 @@ license:
 tags:
   - "etchost"
   - "host"
+  - "linux"

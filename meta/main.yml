@@ -6,7 +6,7 @@ galaxy_info:
   description: Install dependencies and configure the hostname on your system.
   license: Apache-2.0
   company: none
-  min_ansible_version: "2.10"
+  min_ansible_version: "6.1"
 
   platforms:
     - name: Alpine
@@ -17,7 +17,7 @@ galaxy_info:
         - Candidate
     - name: EL
       versions:
-        - 8
+        - all
     - name: Debian
       versions:
         - all
