@@ -14,8 +14,8 @@ This example is taken from [`molecule/default/converge.yml`](https://github.com/
 ---
 - name: Converge
   hosts: all
-  become: yes
-  gather_facts: yes
+  become: true
+  gather_facts: true
 
   roles:
     - role: robertdebock.hostname
@@ -27,8 +27,8 @@ The machine needs to be prepared. In CI this is done using [`molecule/default/pr
 ---
 - name: Prepare
   hosts: all
-  become: yes
-  gather_facts: no
+  become: true
+  gather_facts: false
 
   roles:
     - role: robertdebock.bootstrap
@@ -48,7 +48,7 @@ The default values for the variables are set in [`defaults/main.yml`](https://gi
 hostname: "{{ inventory_hostname_short }}"
 
 # Should the machine be rebooted when the hostname is changed?
-hostname_reboot: yes
+hostname_reboot: true
 ```
 
 ## [Requirements](#requirements)
