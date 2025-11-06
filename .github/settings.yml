@@ -5,4 +5,4 @@
 repository:
   description: Install dependencies and configure the hostname on your system.
   homepage: https://robertdebock.nl/
-  topics: hostname, system, ansible, molecule, tox, playbook
+  topics: hostname, system, ansible, molecule, playbook
